@@ -465,11 +465,11 @@
     let selected = [0, 0];
     let locked = false;
 
-    function processTableRow(selector) {
+    function processTableRow(tableSelector, cellSelector) {
         const tableRow = [];
-        $(selector).each(function () {
+        $(tableSelector).each(function () {
             const arrayOfThisRow = [];
-            const tableData = $(this).find("p");
+            const tableData = $(this).find(cellSelector);
             if (tableData.length > 0) {
                 tableData.each(function () {
                     arrayOfThisRow.push(this);
@@ -480,8 +480,8 @@
         return tableRow;
     }
 
-    const inputTableArray = processTableRow("table#inputTable tr");
-    const mirrorTableArray = processTableRow("table#mirrorTable tr");
+    const inputTableArray = processTableRow("table#inputTable tr", "p");
+    const mirrorTableArray = processTableRow("table#mirrorTable tr", "div");
 
     let opponentGuessCount = 0;
     socket.on("opponentGuess", (data) => {
