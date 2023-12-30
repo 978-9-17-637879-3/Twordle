@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twordle | {{TOTALPLAYERCOUNT}} players online</title>
+    <style>
+        body {
+            background-color: #404040;
+            color: white;
+        }
+
+        div {
+            width: 100%;
+            margin: auto;
+        }
+
+        h3 {
+            position: fixed;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h1>Twordle</h1>
+    <h2>{{PRIVATEPLAYERCOUNT}} players in private matches</h2>
+    <h2>{{QUICKGAMEPLAYERCOUNT}} players in public matches</h2>
+    <form action="/create" method="POST">
+        <button>Create Game</button>
+    </form>
+    <form action="/randomGame" method="POST">
+        <button>Quick Queue</button>
+    </form>
+    <input id="gameId" type="text" placeholder="Game code">
+    <button onclick="location.href = `/game?id=${document.getElementById('gameId').value}`">Join Game</button>
+    <h3>Credit to <a href="https://twitter.com/dcode">@dcode</a> for the base of the on-screen keyboard</h3>
+</div>
+</body>
+
+</html>

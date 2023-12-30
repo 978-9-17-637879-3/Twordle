@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Twordle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="keyboard/Keyboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            touch-action: none;
+            background-color: #555555;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+
+        .griddiv {
+            margin: auto;
+            align-items: center;
+            float: left;
+        }
+
+        .guessTable {
+            position: absolute;
+        }
+
+        td div {
+            background-color: black;
+            height: 3.8vh;
+            width: 3.8vh;
+            color: black;
+            pointer-events: none;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.4vh;
+            text-align: center;
+            color: white
+        }
+
+        #readyMessage {
+            text-align: center;
+            color: white
+        }
+
+        h1 {
+            color: white
+        }
+    </style>
+</head>
+
+<body>
+<a href="/">
+    <button>Quit</button>
+</a>
+<button disabled id="rematch">Rematch</button>
+<h2 id="readyMessage">Waiting for opponent... Game ID (Click
+    to Copy): <span id="gameId"></span></h2>
+<div class="guessTable griddiv">
+    <h1>You</h1>
+    <table id="inputTable">
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="guessTable griddiv" style="right: 0">
+    <h1>Opponent</h1>
+    <table id="mirrorTable">
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+            <td>
+                <div class="griddiv">
+                    <p></p>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script type="module" async>
+    import {io} from "/js/socket.io.esm.min.js";
+    import {answerbank, guessbank} from "/js/words.js";
+
+    const gameId = new URLSearchParams(window.location.search).get("id")
+    $('#gameId')[0].innerText = gameId
+    $('#readyMessage').click(() => navigator.clipboard.writeText(gameId).catch(() => alert("Failed to copy Game ID!")))
+
+
+    const GUESS_ARRAY_COLOR_MAP = {
+        "yellow": "#ffa500",
+        "grey": "#3d3d3d"
+    }
+
+    const upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    const lowerUpperAlphabet = (upperAlphabet + upperAlphabet.toLowerCase()).split("")
+
+
+    function rematch() {
+        socket.once("rematchReply", newGameId => {
+            const url = new URL(window.location.href);
+            url.searchParams.forEach((value, key) => {
+                url.searchParams.delete(key);
+            })
+            url.searchParams.set("id", newGameId)
+            window.location.href = url.href
+        })
+        socket.emit("rematchRequest", gameId)
+    }
+
+    $("#rematch").click(rematch)
+
+    function renderThenAlert(message) {
+        window.requestAnimationFrame(() => {
+            setTimeout(() => {
+                alert(message);
+            }, 200);
+        });
+    }
+
+    const socket = io();
+    socket.emit("register", gameId)
+    socket.once("registerReply", (reply) => {
+        console.debug(`Received code ${reply} from register server.`)
+        switch (reply) {
+            case 400: {
+                alert("Invalid game id!")
+                window.location.href = '/'
+                break;
+            }
+            case 404: {
+                alert("That game does not exist!")
+                window.location.href = '/'
+                break;
+            }
+            case 403: {
+                alert("That game is already full!")
+                window.location.href = '/'
+                break;
+            }
+        }
+    })
+    let over = false;
+    let selected = [0, 0];
+    let locked = false;
+
+    function processTableRow(selector) {
+        const tableRow = [];
+        $(selector).each(function () {
+            const arrayOfThisRow = [];
+            const tableData = $(this).find("p");
+            if (tableData.length > 0) {
+                tableData.each(function () {
+                    arrayOfThisRow.push(this);
+                });
+                tableRow.push(arrayOfThisRow);
+            }
+        });
+        return tableRow;
+    }
+
+    const inputTableArray = processTableRow("table#inputTable tr");
+    const mirrorTableArray = processTableRow("table#mirrorTable tr");
+
+    let opponentGuessCount = 0;
+    socket.on("opponentGuess", (data) => {
+        console.log(data)
+        const {guessArray, isWin} = data;
+        const colorsFromGuess = guessArray.map(color => GUESS_ARRAY_COLOR_MAP[color] ?? color)
+        for (let i = 0; i < colorsFromGuess.length; i++) {
+            mirrorTableArray[opponentGuessCount][i].style.backgroundColor =
+                colorsFromGuess[i];
+        }
+        opponentGuessCount++
+    })
+    socket.on('gameOver', (data) => {
+        console.log('gameOver receive')
+        console.log(data)
+        $('#rematch').prop("disabled", false);
+        if (!over) socket.emit("gameOver", {
+            colorsFromGuess: inputTableArray.map(row => row.map(cell => cell.innerText)),
+            gameId
+        })
+        over = true;
+        const {colorsFromGuess} = data
+        for (let i = 0; i < colorsFromGuess.length; i++) {
+            for (let j = 0; j < colorsFromGuess[i].length; j++) {
+                $(mirrorTableArray[i][j]).children(":first")[0].innerText = colorsFromGuess[i][j]
+            }
+        }
+        renderThenAlert('Game over!')
+    })
+    socket.on("wordSend", word => {
+        alert("Word was " + word)
+        $('#rematch').prop("disabled", false);
+    })
+    socket.on('countdown', (data) => {
+        $("#readyMessage")[0].innerText = data
+    })
+
+    document.addEventListener("keydown", function onKeyDown(event) {
+        if (locked) return;
+        if (over) return;
+        if (selected[1] === inputTableArray[selected[0]].length) {
+            if (event.key === "Enter") {
+                const guess = inputTableArray[selected[0]]
+                    .map((cell) => cell.innerText)
+                    .join("")
+                    .toLowerCase();
+                if (!answerbank.includes(guess) && !guessbank.includes(guess)) {
+                    alert("Invalid word!");
+                    return;
+                }
+
+                locked = true;
+                let currSelect = selected
+                socket.once("guessValidate", (data) => {
+                    console.log("received validation response");
+                    const {guessArray, isWin, invalid, reason} = data;
+                    if (invalid) {
+                        if (reason === 'duplicate')
+                            alert("You have already guessed that word!")
+                        else if (reason === 'notStarted')
+                            alert("The game has not yet started!")
+                        locked = false;
+                        return;
+                    }
+                    const colorsFromGuess = guessArray.map(color => GUESS_ARRAY_COLOR_MAP[color] ?? color)
+                    const divs = $("table#inputTable").find("div")
+                    for (let i = 0; i < colorsFromGuess.length; i++) {
+                        let j = (selected[0] * colorsFromGuess.length) + i
+                        divs[j].style.backgroundColor = colorsFromGuess[i]
+                        const keyBoardLetter = $(`[key="${($(divs[j]).children("p")[0].innerText).toLowerCase()}"]`)[0]
+                        if (keyBoardLetter.style.backgroundColor === "green") continue
+                        if (keyBoardLetter.style.backgroundColor === "rgb(255, 165, 0)" && colorsFromGuess[i] !== "green") continue
+
+                        console.log(keyBoardLetter.style.backgroundColor, "for letter", colorsFromGuess[i], "not skipping")
+                        keyBoardLetter.style.backgroundColor = colorsFromGuess[i]
+                    }
+                    if (isWin) {
+                        over = true;
+                        socket.emit("gameOver", {
+                            colorsFromGuess: inputTableArray.map(row => row.map(cell => cell.innerText)),
+                            gameId
+                        })
+                        locked = false;
+                        return;
+                    }
+                    selected = [currSelect[0] + 1, 0];
+                    locked = false;
+                });
+
+                socket.emit("guess", {guess, gameId});
+            }
+        }
+        if (event.key === "Backspace") {
+            if (selected[1] === 0) return
+            inputTableArray[selected[0]][selected[1] - 1].innerText = "";
+            selected[1] = Math.max(0, selected[1] - 1);
+        }
+
+    });
+    document.addEventListener("keypress", function onPress(event) {
+        if (locked) return;
+        if (over) return;
+        if (selected[1] === inputTableArray[selected[0]].length) {
+            return;
+        }
+        if (lowerUpperAlphabet.includes(event.key)) {
+            inputTableArray[selected[0]][selected[1]].innerText = event.key.toUpperCase();
+            selected[1]++;
+        }
+    });
+</script>
+
+<script src="keyboard/Keyboard.js"></script>
+</body>
