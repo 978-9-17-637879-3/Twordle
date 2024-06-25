@@ -1,5 +1,7 @@
 # Twordle
 
+https://twordle.hardyethan.com
+
 1v1 wordle game, whoever finishes first wins!
 
 * Public and private queue support
